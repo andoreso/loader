@@ -84,11 +84,6 @@ class AutocompleteEntryBox(Entry):
 
 if __name__ == '__main__':
     root = Tk()
-
     entry = AutocompleteEntryBox(lista, root)
     entry.grid(row=0, column=0)
-    Button(text='add').grid(row=1, column=0)
-    Button(text='nothing').grid(row=2, column=0)
-    Button(text='nothing').grid(row=3, column=0)
-
     root.mainloop()
