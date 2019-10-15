@@ -34,8 +34,8 @@ class LoaderGui(Thread):
     def delete4(self):
         screen5.destroy()
 
-    def start_robot(self):
-        pass
+    def start_robot(self, uniid, robotid, task_id):
+        self.code_loader.load(uniid, current_robotid, task_id)
 
     # def load_code(self):
     #     self.code_loader.(self.current_uniid, self.current_robotid, task_id)
@@ -54,7 +54,8 @@ class LoaderGui(Thread):
         Label(screen3, text="").pack()
 
         Label(screen3, text="Robot ID").pack()
-        self.stop_id = Entry(screen3, textvariable=StringVar(self.current_robotid))
+        self.stop_id = Entry(
+            screen3, textvariable=StringVar(self.current_robotid))
 
         stop_id.pack()
         Label(screen3, text="").pack()
@@ -62,12 +63,16 @@ class LoaderGui(Thread):
         Button(screen3, text="Stop robot", width=10,
                height=1, command=self.stop_robot).pack()
 
-    def load(self):
+    def load_screen(self):
         # global screen2
 
         screen2 = Toplevel(self.screen)
         screen2.title("Loader")
         screen2.geometry("300x250")
+
+        self.current_uniid = self.entry_test.get()
+
+        print(self.current_uniid)
 
         lista.append(self.entry_test.get())
 
@@ -98,21 +103,23 @@ class LoaderGui(Thread):
         assignment_entry.pack()
         # password_entry1 = entry(screen2)
         # password_entry1.pack()
+        robot_id = self.robot_id_entry.get()
+        assignment_id = assignment_entry.get()
+
         Label(screen2, text="").pack()
         Button(screen2, text="Start robot", width=10,
-               height=1, command=login_verify).pack()
+               height=1, command=self.start_robot(self.current_uniid, robot_id, assignment_id)).pack()
 
     def main_screen(self):
         # global screen
         self.screen = Tk()
 
-        # self.code_loader = loader.Loader(password)
+        self.code_loader = loader.Loader(password)
 
         self.entry_test = autocomplete.AutocompleteEntryBox(lista, self.screen)
 
-        self.screen.resizable(0, 0)
         # screen.overrideredirect(True)
-        self.screen.wm_attributes('-type', 'splash')
+        # self.screen.wm_attributes('-type', 'splash')
 
         self.screen.geometry("600x500+100+100")
 
@@ -126,24 +133,22 @@ class LoaderGui(Thread):
         Label(text="").pack()
 
         Button(text="Upload code", height="1",
-               width="30", command=self.load).pack()
+               width="30", command=self.load_screen).pack()
         Label(text="").pack()
         Button(text="Stop robot", height="1",
                width="30", command=self.stop).pack()
         Label(text="").pack()
         Button(text="Fetch output", height="1",
-               width="30", command=self.load).pack()
+               width="30", command=self.load_screen).pack()
         Label(text="").pack()
 
         self.screen.mainloop()
 
+
 # main_screen()
+if __name__ == "__main__":
 
-
-password = getpass.getpass("Enter password: ")
-
-gui = LoaderGui()
-
-signal.signal(signal.SIGINT, sigint_handler)
-
-gui.main_screen()
+    password = getpass.getpass("Enter password: ")
+    gui = LoaderGui()
+    signal.signal(signal.SIGINT, sigint_handler)
+    gui.main_screen()
