@@ -37,13 +37,11 @@ class LoaderGui(Thread):
     def start_robot(self):
         pass
 
-    def load_code(self):
-        # self.code_loader.(self.current_uniid, self.current_robotid, task_id)
-        pass
+    # def load_code(self):
+    #     self.code_loader.(self.current_uniid, self.current_robotid, task_id)
 
     def stop_robot(self):
-        self.code_loader(self.)
-        pass
+        self.code_loader.stop(self.stop_id.get())
 
     def stop(self):
 
@@ -56,7 +54,9 @@ class LoaderGui(Thread):
         Label(screen3, text="").pack()
 
         Label(screen3, text="Robot ID").pack()
-        self.robot_id_entry = Entry(screen3, textvariable=StringVar(self.current_robotid))
+        self.stop_id = Entry(screen3, textvariable=StringVar(self.current_robotid))
+
+        stop_id.pack()
         Label(screen3, text="").pack()
 
         Button(screen3, text="Stop robot", width=10,
