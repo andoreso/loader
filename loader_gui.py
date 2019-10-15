@@ -21,7 +21,8 @@ def sigint_handler(sig, frame):
 class LoaderGui(Thread):
     def __init__(self):
         self.current_uniid = ""
-        self.current_robotid = ""
+        self.current_robotid = "1"
+        self.current_taskid = "L1"
 
     # def add_uniid(self):
 
@@ -35,7 +36,7 @@ class LoaderGui(Thread):
         screen5.destroy()
 
     def start_robot(self, uniid, robotid, task_id):
-        self.code_loader.load(uniid, current_robotid, task_id)
+        self.code_loader.load(uniid, robotid, task_id)
 
     # def load_code(self):
     #     self.code_loader.(self.current_uniid, self.current_robotid, task_id)
@@ -65,37 +66,37 @@ class LoaderGui(Thread):
 
     def load_screen(self):
         # global screen2
+        self.current_uniid = self.entry_test.get()
 
         screen2 = Toplevel(self.screen)
         screen2.title("Loader")
         screen2.geometry("300x250")
 
-        self.current_uniid = self.entry_test.get()
 
         print(self.current_uniid)
+        print(self.current_taskid)
+        print(self.current_robotid)
 
-        lista.append(self.entry_test.get())
+        if (self.current_uniid not in lista):
+            lista.append(self.current_uniid)
 
         Label(screen2, text="Fill in all the fields").pack()
         Label(screen2, text="").pack()
-        global last_r_id
-        global last_uni_id
 
         last_r_id = self.current_robotid
 
         default_r_id = StringVar()
         default_r_id.set(last_r_id)
-        last_uni_id = StringVar()
         default_assignment_id = StringVar()
 
-        default_assignment_id.set("L1")
+        default_assignment_id.set(self.current_taskid)
 
         Label(screen2, text="Robot ID").pack()
-        self.robot_id_entry = Entry(screen2, textvariable=default_r_id)
+        robot_id_entry = Entry(screen2, textvariable=default_r_id)
         assignment_entry = Entry(screen2, textvariable=default_assignment_id)
 
         # robot_id_entry.setvar("1")
-        self.robot_id_entry.pack()
+        robot_id_entry.pack()
         Label(screen2, text="").pack()
         Label(screen2, text="Assignment ID").pack()
 
@@ -103,7 +104,7 @@ class LoaderGui(Thread):
         assignment_entry.pack()
         # password_entry1 = entry(screen2)
         # password_entry1.pack()
-        robot_id = self.robot_id_entry.get()
+        robot_id = robot_id_entry.get()
         assignment_id = assignment_entry.get()
 
         Label(screen2, text="").pack()
@@ -111,15 +112,11 @@ class LoaderGui(Thread):
                height=1, command=self.start_robot(self.current_uniid, robot_id, assignment_id)).pack()
 
     def main_screen(self):
-        # global screen
         self.screen = Tk()
 
         self.code_loader = loader.Loader(password)
 
         self.entry_test = autocomplete.AutocompleteEntryBox(lista, self.screen)
-
-        # screen.overrideredirect(True)
-        # self.screen.wm_attributes('-type', 'splash')
 
         self.screen.geometry("600x500+100+100")
 
