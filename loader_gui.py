@@ -102,10 +102,10 @@ class LoaderGui(Thread):
 
         # make into autocomplete entry
         assignment_entry.pack()
+        self.current_taskid = assignment_entry.get()
+        self.current_robotid = robot_id_entry.get()
         # password_entry1 = entry(screen2)
         # password_entry1.pack()
-        robot_id = robot_id_entry.get()
-        assignment_id = assignment_entry.get()
 
         Label(screen2, text="").pack()
         Button(screen2, text="Start robot", width=10,
