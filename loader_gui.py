@@ -36,13 +36,23 @@ class LoaderGui(Thread):
         screen5.destroy()
 
     def start_robot(self):
-        self.code_loader.load(self.current_uniid, self.current_robotid, self.current_taskid)
+        self.update_ids()
+        print (self.current_taskid)
+        print(self.current_uniid)
+        print(self.current_robotid)
+
+        self.code_loader.load(self.current_uniid,
+                              self.current_robotid, self.current_taskid)
 
     # def load_code(self):
     #     self.code_loader.(self.current_uniid, self.current_robotid, task_id)
 
     def stop_robot(self):
         self.code_loader.stop(self.stop_id.get())
+
+    def update_ids(self):
+        self.current_uniid = self.robot_id_entry.get()
+        self.current_taskid = self.assignment_entry.get()
 
     def stop(self):
 
@@ -72,7 +82,6 @@ class LoaderGui(Thread):
         screen2.title("Loader")
         screen2.geometry("300x250")
 
-
         print(self.current_uniid)
         print(self.current_taskid)
         print(self.current_robotid)
@@ -92,21 +101,21 @@ class LoaderGui(Thread):
         default_assignment_id.set(self.current_taskid)
 
         Label(screen2, text="Robot ID").pack()
-        robot_id_entry = Entry(screen2, textvariable=default_r_id)
-        assignment_entry = Entry(screen2, textvariable=default_assignment_id)
+        self.robot_id_entry = Entry(screen2, textvariable=default_r_id)
+        self.assignment_entry = Entry(
+            screen2, textvariable=default_assignment_id)
 
         # robot_id_entry.setvar("1")
-        robot_id_entry.pack()
+        self.robot_id_entry.pack()
         Label(screen2, text="").pack()
         Label(screen2, text="Assignment ID").pack()
 
         # make into autocomplete entry
-        assignment_entry.pack()
-        self.current_taskid = assignment_entry.get()
-        self.current_robotid = robot_id_entry.get()
+        self.assignment_entry.pack()
         # password_entry1 = entry(screen2)
         # password_entry1.pack()
-
+        print(self.current_taskid)
+        print(self.current_robotid)
         Label(screen2, text="").pack()
         Button(screen2, text="Start robot", width=10,
                height=1, command=self.start_robot).pack()
