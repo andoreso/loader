@@ -37,10 +37,10 @@ class LoaderGui(Thread):
 
     def start_robot(self):
         self.update_ids()
-        print (self.current_taskid)
+        print(self.current_taskid)
         print(self.current_uniid)
         print(self.current_robotid)
-
+        self.code_loader.remove_student_repository()
         self.code_loader.load(self.current_uniid,
                               self.current_robotid, self.current_taskid)
 
