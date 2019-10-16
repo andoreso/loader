@@ -35,8 +35,8 @@ class LoaderGui(Thread):
     def delete4(self):
         screen5.destroy()
 
-    def start_robot(self, uniid, robotid, task_id):
-        self.code_loader.load(uniid, robotid, task_id)
+    def start_robot(self):
+        self.code_loader.load(self.current_uniid, self.current_robotid, self.current_taskid)
 
     # def load_code(self):
     #     self.code_loader.(self.current_uniid, self.current_robotid, task_id)
@@ -109,7 +109,7 @@ class LoaderGui(Thread):
 
         Label(screen2, text="").pack()
         Button(screen2, text="Start robot", width=10,
-               height=1, command=self.start_robot(self.current_uniid, robot_id, assignment_id)).pack()
+               height=1, command=self.start_robot).pack()
 
     def main_screen(self):
         self.screen = Tk()
